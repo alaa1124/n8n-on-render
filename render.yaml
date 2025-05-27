@@ -1,18 +1,27 @@
+# Render service definition for n8n
 services:
   - type: web
     name: n8n
-    env: docker
-    plan: free
     envVars:
-      - key: WEBHOOK_URL
-        value: https://n8n-on-render-1-0eq8.onrender.com
+      # 1) The public hostname where n8n is exposed (no protocol or path)
       - key: N8N_HOST
-        value: n8n-isbo.onrender.com
+        value: n8n-on-render-1-0eq8.onrender.com   # replace with your actual Render subdomain
+      # 2) Always use HTTPS on Render
+      - key: N8N_PROTOCOL
+        value: https
+      # 3) Internal port n8n listens on
       - key: N8N_PORT
-        value: 5678
-      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "5678"
+      # 4) Trust the X-Forwarded-* headers to build webhook and OAuth URLs dynamically
+      - key: N8N_TRUST_PROXY
         value: "true"
-      - key: N8N_BASIC_AUTH_USER
-        value: admin
-      - key: N8N_BASIC_AUTH_PASSWORD
-        value: yourpassword
+      # 5) (Optional) Enable basic auth if needed
+      # - key: N8N_BASIC_AUTH_ACTIVE
+      #   value: "true"
+      # - key: N8N_BASIC_AUTH_USER
+      #   value: yourUser
+      # - key: N8N_BASIC_AUTH_PASSWORD
+      #   value: yourPass
+
+# No static WEBHOOK_URL or N8N_WEBHOOK_URL entries, so n8n will generate callbacks
+# based on the incoming host and protocol headers provided by Render."```
