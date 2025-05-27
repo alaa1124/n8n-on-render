@@ -5,7 +5,7 @@ services:
     plan: free
     envVars:
       - key: WEBHOOK_URL
-        value: https://n8n-isbo.onrender.com
+        value: https://n8n-on-render-1-0eq8.onrender.com
       - key: N8N_HOST
         value: n8n-isbo.onrender.com
       - key: N8N_PORT
